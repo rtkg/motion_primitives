@@ -1,0 +1,14 @@
+
+rosservice call /primitive_controllers/trigger_movement '{movement: {id: 14, tau: 1, target_posture: {name: ['FFJ3', 'MFJ3'], position: [1, 0.5]}}}'
+
+#REFERENCE VS ACTUAL SET POSITION
+rxplot -r 100 /sh_ffj3_mixed_position_velocity_controller/command/position[0],primitive_controllers/FFJ3/ref/position[0]:position[1]:position[2]:position[3]  
+
+#ACTUAL VS SET POSITION
+
+#SETTING GAINS
+rosservice call /sh_ffj3_mixed_position_velocity_controller/set_gains '{position_p: -2.3, position_i: 0, position_d: 0, position_i_clamp: 0.1, min_velocity: -1.5, max_velocity: 1.5, position_deadband: 0, velocity_p: -20, velocity_i: 0, velocity_d: 0, velocity_i_clamp: 0, max_force: 10, friction_deadband: 100}'
+
+#CONTROLLER TUNING
+rxplot -r 100 /sh_ffj3_position_velocity_controller/state/command /sh_ffj3_position_velocity_controller/state/process_value /sh_ffj3_position_velocity_controller/state/process_value_dot 
+

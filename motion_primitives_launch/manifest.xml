@@ -1,0 +1,15 @@
+<package>
+  <description brief="motion_primitives_launch">
+
+     motion_primitives_launch
+
+  </description>
+  <author>rkg</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/motion_primitives_launch</url>
+  <depend package="sr_hand"/>
+ <depend package="sr_description"/>
+</package>
+
+

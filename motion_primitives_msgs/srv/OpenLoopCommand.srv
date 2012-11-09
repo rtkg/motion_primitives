@@ -1,0 +1,4 @@
+int8 type #1=Step, 2=sine
+float32 magnitude
+float32 duration
+---

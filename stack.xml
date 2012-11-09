@@ -1,0 +1,9 @@
+<stack>
+  <description brief="motion_primitives">motion_primitives</description>
+  <author>Maintained by Robert Krug</author>
+  <license>BSD</license>  
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/motion_primitives</url>
+  <depend stack="ros" />
+
+</stack>

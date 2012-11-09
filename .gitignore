@@ -1,0 +1,71 @@
+# git-ls-files --others --ignored
+# Lines that start with '#' are comments.
+
+# Backup and data files
+eg/eg.*
+*~
+*.bak
+.mat
+*.off
+*.x
+x.*
+r
+x
+x?
+r?
+
+# patch results
+*.rej
+
+# Build products
+tmp/*
+build/Makefile*
+build/CMakeFiles
+build/CMakeCache.txt
+build/*/Makefile*
+build/*/object_script*
+build/*/Release/*
+build/*/Debug/*
+build/*/MinSizeRel/*
+build/*/RelWithDebInfo/*
+build
+motion_primitives_msgs/srv_gen
+motion_primitives_msgs/msg_gen
+motion_primitives_msgs/src
+primitive_controllers/bin
+*#
+*.#
+*.obj
+*.urdf
+*.dae
+*.stl
+*.zip
+*.a
+*.dll
+*.lib
+*.exe
+*.bag
+*.o
+*.so
+*.md5sum
+
+# Qt files
+*.pro.user
+
+# DevStudio files
+*.bsc
+*.ncb
+*.pdb
+*.suo
+*.user
+*.ilk
+
+# CVS files
+CVS/*
+*/CVS/*
+*/*/CVS/*
+*/*/*/CVS/*
+*.cvsignore
+
+# Other files
+working/

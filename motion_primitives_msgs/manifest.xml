@@ -1,0 +1,14 @@
+<package>
+  <description brief="motion_primitives_msgs">
+
+     motion_primitives_msgs
+
+  </description>
+  <author>rkg</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/motion_primitives_msgs</url>
+  <depend package="sensor_msgs"/>
+</package>
+
+

@@ -1,0 +1,11 @@
+<library path="lib/libtracking_controllers">
+
+  <class name="tracking_controllers/SrhSystemIdentificationController"
+         type="controller::SrhSystemIdentificationController"
+         base_class_type="pr2_controller_interface::Controller" />
+
+  <class name="tracking_controllers/SrhInverseDynamicsController"
+         type="controller::SrhInverseDynamicsController"
+         base_class_type="pr2_controller_interface::Controller" />
+
+</library>

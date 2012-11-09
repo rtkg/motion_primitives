@@ -1,0 +1,21 @@
+<package>
+  <description brief="primitive_controllers">
+
+     primitive_controllers
+
+  </description>
+  <author>rkg</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/primitive_controllers</url>
+  <rosdep name="boost"/>
+  <depend package="roscpp"/>
+  <depend package="motion_primitives_msgs"/>
+  <depend package="eigen"/>
+  <depend package="acado"/>
+  <depend package="std_srvs"/>
+  <depend package="sensor_msgs"/>
+  <depend package="sr_robot_msgs"/>
+</package>
+
+
