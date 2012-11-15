@@ -9,5 +9,5 @@ To send an open loop sweep with duration of 30 sec, magnitude 20 and start/stop 
 
 After finishing the OL command, the controller servos back to the initial position before executing the OL command.
 
-To save the obtained data: rosservice call /sh_ffj3_system_identification_controller/save_ol_data '{path: "/home/rkg/ros/motion_primitives/matlab/data/ffj3_step_1_20.txt"}'
+To save the obtained data: rosservice call /sh_ffj3_system_identification_controller/save_ol_data '{path: "/home/rkg/ros/motion_primitives/matlab/data/ffj3_step_1_20.txt"}'. Note, that each open loop command overwrites the internally stored data so its necessary to save seperatly after each command.
 
