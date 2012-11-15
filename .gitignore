@@ -5,7 +5,7 @@
 eg/eg.*
 *~
 *.bak
-.mat
+*.mat
 *.off
 *.x
 x.*

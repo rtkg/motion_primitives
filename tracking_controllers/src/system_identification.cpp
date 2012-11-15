@@ -14,7 +14,6 @@
 //#include <std_msgs/Float64.h>
 
 #include "tracking_controllers/system_identification.hpp"
-#include <math.h>
 #include <iostream> 
 #include <fstream> 
 
@@ -23,7 +22,7 @@ namespace controller {
   double PI=acos(-1.0);
 
   //----------------------------------------------------------------------------------
-  SystemIdentification::SystemIdentification() :  joint_state_(NULL), active_(false), effort_(0.0), t_(0.0), t_init_(0.0), T_(0.0), type_(0), magnitude_(0.0), n_data_(0)
+  SystemIdentification::SystemIdentification() :  joint_state_(NULL), active_(false), effort_(0.0), t_(0.0), t_init_(0.0), T_(0.0), K_(0.0), w_0_(0.0), type_(0), magnitude_(0.0), n_data_(0)
   { 
   } 
   //----------------------------------------------------------------------------------
@@ -55,12 +54,19 @@ namespace controller {
   //----------------------------------------------------------------------------------
   bool SystemIdentification::olCommandCB(motion_primitives_msgs::OpenLoopCommand::Request  &req, motion_primitives_msgs::OpenLoopCommand::Response &res)
   {
+    ROS_ASSERT(req.duration > 0);
+    ROS_ASSERT(req.w_0 >= 0);
+    ROS_ASSERT(req.w_f >= 0);
+
     lock_.lock();
     active_=true;
     effort_=0.0;
     T_=req.duration;
     type_=req.type;
     magnitude_=req.magnitude;
+    K_=std::exp(std::log(req.w_f/req.w_0)/T_);
+    w_0_=req.w_0;
+
     t_=0.0;
     t_init_=0.0;
     n_data_=0;
@@ -153,6 +159,10 @@ namespace controller {
 
       case SINE:
 	effort_=magnitude_*sin(t_*PI/T_);
+	break;
+
+     case SWEEP:
+        effort_=magnitude_*sin(2*PI*w_0_*((std::pow(K_,t_)-1)/std::log(K_)));
 	break;
 
       default:

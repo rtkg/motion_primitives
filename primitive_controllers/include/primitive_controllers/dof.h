@@ -16,6 +16,7 @@
 #include <Eigen/Core>
 #include <math.h>
 #include "SQProblem.hpp"
+
 #include <iostream>
 #include <fstream>
 

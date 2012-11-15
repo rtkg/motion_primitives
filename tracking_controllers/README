@@ -1,0 +1,13 @@
+Package implementing inverse dynamics and system identification controller (allowing to send open-loop commands) for the Shadow Hand.
+
+the SrhSystemIdentificationController is based on the SrhMixedPositionVelocityController with additonal services to send open loop commands and save the resulting response in form of text files.
+Currently, 3 types of OL commands are available: 1=step, 2=sine, 3=sweep, parametrized by force magnitude, duration and start/final frequency (only necessary for the sweep)
+
+To send an open loop step with duration of 1 sec and magnitude of 20: rosservice call /sh_ffj3_system_identification_controller/open_loop_command '{type: 1, duration: 1, magnitude: 20}'
+To send an open loop sine with duration of 1 sec and magnitude of 10: rosservice call /sh_ffj3_system_identification_controller/open_loop_command '{type: 2, duration: 5, magnitude: 10}'
+To send an open loop sweep with duration of 30 sec, magnitude 20 and start/stop frequency of 0.5/5 Hz: rosservice call /sh_ffj3_system_identification_controller/open_loop_command '{type: 3, duration: 30, magnitude: 20, w_0: 0.5, w_f: 5}'
+
+After finishing the OL command, the controller servos back to the initial position before executing the OL command.
+
+To save the obtained data: rosservice call /sh_ffj3_system_identification_controller/save_ol_data '{path: "/home/rkg/ros/motion_primitives/matlab/data/ffj3_step_1_20.txt"}'
+

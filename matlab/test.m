@@ -12,8 +12,9 @@ load ./data/thj4_sine_5_5.txt;
 load ./data/thj5_sine_5_5.txt;
 load ./data/wrj1_sine_5_5.txt;
 load ./data/wrj2_sine_5_5.txt;
+load ./data/ffj3_sweep_30_20.txt;
 
-data=ffj3_step_10_5;
+data=ffj3_sweep_30_20;
 
 X=data(:,2:4);
 f=data(:,5);

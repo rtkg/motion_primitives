@@ -29,11 +29,13 @@
 #include <pr2_controller_interface/controller.h>
 #include <boost/thread/mutex.hpp>
 #include <Eigen/Core>
+#include <math.h>
 
 namespace controller
 {
-#define STEP 1
-#define SINE 2
+#define STEP  1
+#define SINE  2
+#define SWEEP 3
 
   class SystemIdentification
   {
@@ -53,9 +55,8 @@ namespace controller
     pr2_mechanism_model::JointState* joint_state_;
     bool active_;
     double effort_;
-    double t_;
-    double t_init_;
-    double T_;
+    double t_, t_init_,T_;
+    double K_,w_0_;
     int type_;
     double magnitude_;
     unsigned int n_data_;

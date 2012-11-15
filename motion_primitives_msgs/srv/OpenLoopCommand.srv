@@ -1,4 +1,6 @@
-int8 type #1=Step, 2=sine
+int8 type #1=step, 2=sine, 3=sweep
 float32 magnitude
 float32 duration
+float32 w_0 #initial frequency for the sweep
+float32 w_f #final frequency for the sweep
 ---
