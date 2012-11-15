@@ -14,7 +14,7 @@ sh_ffj0_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_ffj3_system_identification_controller:
@@ -33,7 +33,7 @@ sh_ffj3_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 100.0
+    max_force: 20.0
     p: -20.0
 
 sh_ffj4_system_identification_controller:
@@ -52,7 +52,7 @@ sh_ffj4_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_lfj0_system_identification_controller:
@@ -71,7 +71,7 @@ sh_lfj0_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_lfj3_system_identification_controller:
@@ -90,7 +90,7 @@ sh_lfj3_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_lfj4_system_identification_controller:
@@ -109,7 +109,7 @@ sh_lfj4_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_lfj5_system_identification_controller:
@@ -128,7 +128,7 @@ sh_lfj5_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_mfj0_system_identification_controller:
@@ -147,7 +147,7 @@ sh_mfj0_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_mfj3_system_identification_controller:
@@ -166,7 +166,7 @@ sh_mfj3_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_mfj4_system_identification_controller:
@@ -185,7 +185,7 @@ sh_mfj4_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_rfj0_system_identification_controller:
@@ -204,7 +204,7 @@ sh_rfj0_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_rfj3_system_identification_controller:
@@ -223,7 +223,7 @@ sh_rfj3_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_rfj4_system_identification_controller:
@@ -242,7 +242,7 @@ sh_rfj4_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_thj1_system_identification_controller:
@@ -261,7 +261,7 @@ sh_thj1_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_thj2_system_identification_controller:
@@ -280,7 +280,7 @@ sh_thj2_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_thj3_system_identification_controller:
@@ -299,7 +299,7 @@ sh_thj3_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_thj4_system_identification_controller:
@@ -318,7 +318,7 @@ sh_thj4_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_thj5_system_identification_controller:
@@ -337,7 +337,7 @@ sh_thj5_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_wrj1_system_identification_controller:
@@ -356,7 +356,7 @@ sh_wrj1_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 sh_wrj2_system_identification_controller:
@@ -375,7 +375,7 @@ sh_wrj2_system_identification_controller:
     friction_deadband: 100.0
     i: 0.0
     i_clamp: 0.0
-    max_force: 10.0
+    max_force: 20.0
     p: -20.0
 
 
