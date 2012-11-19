@@ -1,8 +1,6 @@
 sh_ffj0_inverse_dynamics_controller:
   joint: FFJ0
-  model: 
-    order: 2
-    param: [0.0, 1.0,-0.000001,-20.5091, 0.0, 0.4059, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]   
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -17,9 +15,7 @@ sh_ffj0_inverse_dynamics_controller:
 
 sh_ffj3_inverse_dynamics_controller:
   joint: FFJ3
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.0009, -45.1068, 0.0, 0.8890, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -34,9 +30,7 @@ sh_ffj3_inverse_dynamics_controller:
 
 sh_ffj4_inverse_dynamics_controller:
   joint: FFJ4
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.000024651, -1247.5, 0.0, 24.6509, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]  
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -51,9 +45,7 @@ sh_ffj4_inverse_dynamics_controller:
      
 sh_mfj0_inverse_dynamics_controller:
   joint: MFJ0
-  model: 
-    order: 2
-    param: [0.0, 1.0,-0.000001,-20.5091, 0.0, 0.4059, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -68,9 +60,7 @@ sh_mfj0_inverse_dynamics_controller:
 
 sh_mfj3_inverse_dynamics_controller:
   joint: MFJ3
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.0000043534,-219.5875 , 0.0, 4.3534, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]   
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -85,9 +75,7 @@ sh_mfj3_inverse_dynamics_controller:
 
 sh_mfj4_inverse_dynamics_controller:
   joint: MFJ4
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.000024651, -1247.5, 0.0, 24.6509, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]     
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -102,9 +90,7 @@ sh_mfj4_inverse_dynamics_controller:
 
 sh_rfj0_inverse_dynamics_controller:
   joint: RFJ0
-  model: 
-    order: 2
-    param: [0.0, 1.0,-0.000001,-20.5091, 0.0, 0.4059, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]    
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -119,9 +105,7 @@ sh_rfj0_inverse_dynamics_controller:
 
 sh_rfj3_inverse_dynamics_controller:
   joint: RFJ3
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.0000043534,-219.5875 , 0.0, 4.3534, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]    
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -136,9 +120,7 @@ sh_rfj3_inverse_dynamics_controller:
 
 sh_rfj4_inverse_dynamics_controller:
   joint: RFJ4
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.000024651, -1247.5, 0.0, 24.6509, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]     
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -153,9 +135,7 @@ sh_rfj4_inverse_dynamics_controller:
 
 sh_lfj0_inverse_dynamics_controller:
   joint: LFJ0
-  model: 
-    order: 2
-    param: [0.0, 1.0,-0.000001,-20.5091, 0.0, 0.4059, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -170,9 +150,7 @@ sh_lfj0_inverse_dynamics_controller:
 
 sh_lfj3_inverse_dynamics_controller:
   joint: LFJ3
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.0000043534,-219.5875 , 0.0, 4.3534, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]       
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -187,9 +165,7 @@ sh_lfj3_inverse_dynamics_controller:
 
 sh_lfj4_inverse_dynamics_controller:
   joint: LFJ4
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.000024651, -1247.5, 0.0, 24.6509, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -204,9 +180,7 @@ sh_lfj4_inverse_dynamics_controller:
 
 sh_lfj5_inverse_dynamics_controller:
   joint: LFJ5
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.0018, -92.3272, 0.0, 1.8322, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]    
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -221,9 +195,7 @@ sh_lfj5_inverse_dynamics_controller:
 
 sh_thj1_inverse_dynamics_controller:
   joint: THJ1
-  model: 
-    order: 2
-    param: [0.0, 1.0, -1.0, -503.0506, 0.0, 10.0, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -238,9 +210,7 @@ sh_thj1_inverse_dynamics_controller:
 
 sh_thj2_inverse_dynamics_controller:
   joint: THJ2
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.01, -506.0481, 0.0, 10.0, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -255,9 +225,7 @@ sh_thj2_inverse_dynamics_controller:
 
 sh_thj3_inverse_dynamics_controller:
   joint: THJ3
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.01, -504.7123, 0.0, 10.0, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]     
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -272,9 +240,7 @@ sh_thj3_inverse_dynamics_controller:
 
 sh_thj4_inverse_dynamics_controller:
   joint: THJ4
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.01, -503.3904, 0.0, 10.0, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]       
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -289,9 +255,7 @@ sh_thj4_inverse_dynamics_controller:
 
 sh_thj5_inverse_dynamics_controller:
   joint: THJ5
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.0065, -330.6496, 0.0, 6.5457, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -306,9 +270,7 @@ sh_thj5_inverse_dynamics_controller:
 
 sh_wrj1_inverse_dynamics_controller:
   joint: WRJ1
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.01, -940.5380, 0.0, 10.0, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:
@@ -323,9 +285,7 @@ sh_wrj1_inverse_dynamics_controller:
 
 sh_wrj2_inverse_dynamics_controller:
   joint: WRJ2
-  model: 
-    order: 2
-    param: [0.0, 1.0, -0.01, -1031.0, 0.0, 10.0, 1.0, 0.0, 0.0]     
+  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]      
   pos_filter_window: 5  
   vel_filter_window: 50  
   pid:

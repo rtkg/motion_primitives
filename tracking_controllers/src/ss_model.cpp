@@ -16,7 +16,7 @@
 #include <unsupported/Eigen/MatrixFunctions>
 #include "tracking_controllers/ss_model.hpp"
 #include <Eigen/SVD>
-
+#include <math.h>
 
 
 // #include <math.h>
@@ -35,13 +35,14 @@ namespace controller {
   {
   }
   //----------------------------------------------------------------------------------
-  bool SSModel::init(const Eigen::MatrixXd & A,const Eigen::MatrixXd & B,const Eigen::MatrixXd & C,const Eigen::MatrixXd & D)
+  bool SSModel::init(const Eigen::MatrixXd & A,const Eigen::MatrixXd & B,const Eigen::MatrixXd & C,const Eigen::MatrixXd & D,const Eigen::VectorXd & g)
   {
     order_=A.cols();
     ROS_ASSERT(A.cols()==A.rows()); //make sure A is square
     ROS_ASSERT(B.rows()==order_); ROS_ASSERT(B.cols()==1); //only support single input systems
     ROS_ASSERT(C.rows()==1); ROS_ASSERT(C.cols()==order_);
     ROS_ASSERT(D.rows()==1); ROS_ASSERT(D.cols()== 1);
+    ROS_ASSERT(g.rows()==6);
 
     //Check stability
     double s_tol=-1e-8;
@@ -55,6 +56,7 @@ namespace controller {
     B_=B;
     C_=C;
     D_=D;
+    g_=g;
     x_.resize(order_,1); x_.setZero();
     dx_.resize(order_,1); x_.setZero();
     u_.resize(1,1); u_.setZero();
@@ -98,7 +100,7 @@ namespace controller {
   //----------------------------------------------------------------------------------
   void SSModel::update()
   {
-    dx_=A_*x_+B_*u_; 
+    dx_=A_*x_+B_*u_-B_*makkarFriction(x_(1)); 
     y_=C_*x_+D_*u_;
   }
   //----------------------------------------------------------------------------------
@@ -144,7 +146,12 @@ namespace controller {
     // std::cout<<std::endl<<"x "<<x_<<std::endl;
     // std::cout<<std::endl<<"dx "<<dx_<<std::endl;
 
-    u_=pinv_B_*(dx_ - A_*x_);
+    u_=pinv_B_*(dx_ - A_*x_+B_*makkarFriction(x_(1)));
+  }
+  //----------------------------------------------------------------------------------
+  double SSModel::makkarFriction(double v)
+  {
+    return g_(0)*(std::tanh(g_(1)*v)-std::tanh(g_(2)*v))+g_(3)*std::tanh(g_(4)*v)+g_(5)*v;
   }
   //----------------------------------------------------------------------------------
   // void SSModel::computeDiscreteSystem(double Td)

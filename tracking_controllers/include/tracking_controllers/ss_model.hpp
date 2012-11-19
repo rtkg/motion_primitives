@@ -39,7 +39,7 @@ namespace controller
     SSModel();
    ~SSModel();
 
-    bool init(const Eigen::MatrixXd & A,const Eigen::MatrixXd & B,const Eigen::MatrixXd & C, const Eigen::MatrixXd & D);    
+    bool init(const Eigen::MatrixXd & A,const Eigen::MatrixXd & B,const Eigen::MatrixXd & C, const Eigen::MatrixXd & D,const Eigen::VectorXd & g);    
     //void computeDiscreteSystem(double Td);
     void setState(const Eigen::MatrixXd & x);
     Eigen::MatrixXd getState();
@@ -57,8 +57,11 @@ namespace controller
   private: 
 
     Eigen::MatrixXd A_,B_,pinv_B_,C_,D_, x_, dx_, u_,y_;
+    Eigen::VectorXd g_;
     unsigned int order_;
     bool initialized_;
+
+    double makkarFriction(double v);
     // ros::ServiceServer ol_cmd_srv_;
     // ros::ServiceServer save_data_srv_;
 

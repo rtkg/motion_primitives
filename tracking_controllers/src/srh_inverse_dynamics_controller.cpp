@@ -13,7 +13,7 @@
 #include "sr_utilities/sr_math_utils.hpp"
 #include <Eigen/Core>
 //#include <std_msgs/Float64.h>
-#include <queue>
+//#include <queue>
 
 /// Register controller to pluginlib
 PLUGINLIB_DECLARE_CLASS(tracking_controllers, SrhInverseDynamicsController, controller::SrhInverseDynamicsController, pr2_controller_interface::Controller)
@@ -142,48 +142,33 @@ namespace controller {
     pos_filter_.resize(pos_filter_window);
     vel_filter_.resize(vel_filter_window);
 
-    XmlRpc::XmlRpcValue model;
-    if (!node_.getParam("model", model)) 
+    XmlRpc::XmlRpcValue model_param;
+    if (!node_.getParam("model_param", model_param)) 
       {
-	ROS_ERROR("No joint model given (namespace: %s)", node_.getNamespace().c_str());
+	ROS_ERROR("No joint model parameters given (namespace: %s)", node_.getNamespace().c_str());
 	return false;
       }
 
-    int order;
-    std::queue<double> param;
-    ROS_ASSERT(model["order"].getType() == XmlRpc::XmlRpcValue::TypeInt);
-    ROS_ASSERT(model["param"].getType() == XmlRpc::XmlRpcValue::TypeArray);
-    for (int32_t i = 0; i < model["param"].size(); ++i) 
-      {
-	ROS_ASSERT(model["param"][i].getType() == XmlRpc::XmlRpcValue::TypeDouble);
-	param.push(model["param"][i]);
-      }
-    order=(int)model["order"];
+    ROS_ASSERT(model_param.getType() == XmlRpc::XmlRpcValue::TypeArray);
+    ROS_ASSERT(model_param.size() == 9);
+    for (int32_t i = 0; i < model_param.size(); ++i) 
+	ROS_ASSERT(model_param[i].getType() == XmlRpc::XmlRpcValue::TypeDouble);
 
     //initialize the state space model
-    Eigen::MatrixXd A(order,order),B(order,1),C(1,order), D(1,1);
-    for (int i=0; i < order; i++)
-      for (int j=0; j < order; j++)
-	{
-	  A(i,j)=(double)param.front();
-	  param.pop();
-	}
+    Eigen::MatrixXd A(2,2),B(2,1),C(1,2), D(1,1);
+    Eigen::VectorXd g(6,1); //parameters for the Makkar friction model
+    A.setZero(); B.setZero(); C.setZero(); D.setZero(); g.setZero();
+   
+    A(0,1)=1.0; A(1,0)=(double)model_param[0]/(double)model_param[2]*(-1.0); A(1,1)=(double)model_param[1]/(double)model_param[2]*(-1.0);
+    B(1,0)=1.0/(double)model_param[2];
+    C(0,0)=1.0;
 
-    for (int i=0; i < order; i++)
-      {
-	B(i)=(double)param.front();
-	param.pop();
-      }
-    for (int i=0; i < order; i++)
-      {
-	C(i)=(double)param.front();
-	param.pop();
-      }
- 
-    D(0,0)=(double)param.front();
+    for (int i=0; i<5; i++)
+      g(i)=(double)model_param[i+3];
+
 
     boost::shared_ptr<SSModel> ss_model= boost::shared_ptr<SSModel>(new SSModel());
-    if (!ss_model->init(A,B,C,D))
+    if (!ss_model->init(A,B,C,D,g))
       return false;
 
     boost::shared_ptr<control_toolbox::Pid> pid = boost::shared_ptr<control_toolbox::Pid>( new control_toolbox::Pid() );
