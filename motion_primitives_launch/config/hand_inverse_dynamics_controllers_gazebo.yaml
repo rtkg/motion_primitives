@@ -150,17 +150,18 @@ sh_lfj0_inverse_dynamics_controller:
 
 sh_lfj3_inverse_dynamics_controller:
   joint: LFJ3
-  model_param: [0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]       
+  model_param: [0.001, 61.3451, 0.701, 138.6009, 3.8127, 0.8693, 7.8032, 1.9592, 0.0]    
   pos_filter_window: 5  
-  vel_filter_window: 50  
+  vel_filter_window: 10  
+  motor_min_force_threshold: 20
   pid:
-    p: -625
+    p: -25
     i: -1.0
-    d: -45.0
+    d: -9.0
     i_clamp: 0.1
     deadband: 0.0
     friction_deadband: 0.0
-    max_force: 50.0
+    max_force: 1000.0
   type: tracking_controllers/SrhInverseDynamicsController
 
 sh_lfj4_inverse_dynamics_controller:

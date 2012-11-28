@@ -30,6 +30,8 @@ build/*/Debug/*
 build/*/MinSizeRel/*
 build/*/RelWithDebInfo/*
 build
+test_traj_pub/srv_gen
+test_traj_pub/src/test_traj_pub
 motion_primitives_msgs/srv_gen
 motion_primitives_msgs/msg_gen
 motion_primitives_msgs/src

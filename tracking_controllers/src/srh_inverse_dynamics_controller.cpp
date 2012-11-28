@@ -106,7 +106,6 @@ namespace controller {
 
     sub_command_ = node_.subscribe<sensor_msgs::JointState>("command", 1, &SrhInverseDynamicsController::commandCallback, this);
   
-
     return true;
   }
   //----------------------------------------------------------------------------------
@@ -228,7 +227,7 @@ namespace controller {
     if( !has_j2)
 	if (!joint_state_->calibrated_)
 	  return;
-     
+
     assert(robot_ != NULL);
     ros::Time time = robot_->getTime();
     assert(joint_state_->joint_);
@@ -270,7 +269,7 @@ namespace controller {
     error_position=command_pos_-filtered_pos_;
     error_velocity=command_vel_-filtered_vel_;
 
-    bool in_deadband = hysteresis_deadband.is_in_deadband(command_pos_, error_position, deadband);
+    bool in_deadband = hysteresis_deadband.is_in_deadband(command_pos_, error_position, deadband); //not used
 
     if( in_deadband ) //consider the error as 0 if we're in the deadband
       {
@@ -291,7 +290,19 @@ namespace controller {
     model_->computeControl();
     commanded_effort=model_->getControl();
 
-    //Friction compensation, only if we're not in the deadband.
+  //   if (joint_state_->joint_->name=="LFJ3"){
+  //     std::cout<<"command_pos_: "<<command_pos_<<std::endl;
+  //    std::cout<<"command_vel_: "<<command_vel_<<std::endl;
+  // std::cout<<"command_acc_: "<<command_acc_<<std::endl;
+  //    std::cout<<"error_position: "<<error_position<<std::endl;
+  //    std::cout<<"error_velocity: "<<error_velocity<<std::endl;
+  //     std::cout<<"x: "<<x.transpose()<<std::endl;
+  //     std::cout<<"dx: "<<dx.transpose()<<std::endl;
+  //      std::cout<<"effort: "<<commanded_effort<<std::endl;
+  //      exit(0);
+    // }
+
+    //Friction compensation, only if we're not in the deadband. (not used)
     if( !in_deadband )
       friction_offset = friction_compensator->friction_compensation(filtered_pos_ , filtered_vel_, int(commanded_effort), friction_deadband );
 

@@ -1,0 +1,11 @@
+roslaunch platform_specific sr_edc_oru.launch
+roslaunch sr_ethercat_hand_config sr_edc_oru_controllers_LF.launch
+rostopic pub /sh_lfj3_system_identification_controller/command std_msgs/Float64 -- 0.78
+
+rosservice call /sh_lfj3_system_identification_controller/open_loop_command '{type: 3, duration: 10.0, magnitude: -120.0, w_0: 0.5, w_f: 5.0}'
+
+rosservice call /sh_lfj3_system_identification_controller/open_loop_command '{type: 1, duration: 1.0, magnitude: 170.0}'
+
+rosservice call /sh_lfj3_system_identification_controller/open_loop_command '{type: 2, duration: 5.0, magnitude: -180.0}
+
+

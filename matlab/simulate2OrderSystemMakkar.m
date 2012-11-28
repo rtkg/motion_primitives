@@ -1,4 +1,4 @@
-function [X]=simulate2OrderSystemMakkar(p,u,t,x0,data)
+function [X l2]=simulate2OrderSystemMakkar(p,u,t,x0,data)
 
 % A=[0 1;-p(1)/p(3) -p(2)/p(3)];
 % B=[0;1/p(3)];
@@ -31,3 +31,12 @@ subplot(3,1,3);
 plot(t,X(:,3),'k--');grid on; hold on;
 plot(data(:,1),data(:,4),'r');
 title('Acceleration');
+
+t_=data(1,1):mean(diff(data(:,1))):data(end,1);
+    q = interp1(t_,data(:,2),t)';
+    dq = interp1(t_,data(:,3),t)';
+    ddq = interp1(t_,data(:,4),t)';
+
+l2(1)=norm(q-X(:,1));
+l2(2)=norm(dq-X(:,2));
+l2(3)=norm(ddq-X(:,3));

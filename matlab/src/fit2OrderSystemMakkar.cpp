@@ -78,8 +78,8 @@ int main(int argc, char **argv)
   algorithm.set( MAX_NUM_ITERATIONS, 1000 );
   algorithm.set (PRINT_COPYRIGHT, NO);
   // algorithm.set (PRINT_SCP_METHOD_PROFILE, YES);
-    algorithm.set( HESSIAN_APPROXIMATION, BLOCK_BFGS_UPDATE);
-  // algorithm.set( HESSIAN_APPROXIMATION, EXACT_HESSIAN);
+  //algorithm.set( HESSIAN_APPROXIMATION, BLOCK_BFGS_UPDATE);
+  algorithm.set( HESSIAN_APPROXIMATION, EXACT_HESSIAN);
   algorithm.set(GLOBALIZATION_STRATEGY, GS_LINESEARCH ); 
   algorithm.set(LINESEARCH_TOLERANCE, 1e-2 ); 
   algorithm.set(INFEASIBLE_QP_HANDLING,IQH_RELAX_L2);
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
   double obj_val=algorithm.getObjectiveValue();
   std::cout<<obj_val<<std::endl;
   solution.append(VectorspaceElement(1,&obj_val));
-
+  algorithm.printLoggingInfo();
 
   // solution.print("optimal solution \n");
   solution.printToFile((path+"solution.dat").c_str(),"",PS_PLAIN);

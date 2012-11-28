@@ -19,7 +19,7 @@ load ./data/ffj3_sweep_30_20.txt;
 nO=2;
 
 %training data
-data=[ffj3_sine_5_5; ffj3_step_10_5];
+data=[ffj3_sweep_30_20];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %data to compare simulation

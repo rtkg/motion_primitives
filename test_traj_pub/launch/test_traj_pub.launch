@@ -1,0 +1,14 @@
+<launch>
+
+    <node pkg="test_traj_pub" name="test_traj_pub" type="test_traj_pub" output="screen" ns="test_traj_pub">
+       <param name="sample_time" type="double" value="0.01"/>
+       <param name="topic" type="string" value="/sh_lfj3_inverse_dynamics_controller/command"/>   
+    </node>
+
+</launch>
+
+
+
+
+
+

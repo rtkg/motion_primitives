@@ -1,0 +1,55 @@
+<launch>
+  <include file="$(find sr_edc_launch)/sr_edc.machine" />
+  <param name="/use_sim_time" value="false"/>
+
+  <!-- polling rates -->
+  <rosparam command="load" file="$(find sr_ethercat_hand_config)/rates/sensor_data_polling.yaml" />
+  <rosparam command="load" file="$(find sr_ethercat_hand_config)/rates/motor_data_polling.yaml" />
+
+  <!-- Default controllers -->
+  <include file="$(find platform_specific)/launch/sr_edc_default_controllers_oru.launch" />
+
+  <!-- Should be loaded before starting/running pr2_etherCAT node -->
+  <rosparam command="load" ns="srh" file="$(find sr_ethercat_hand_config)/calibrations/sr_edc_sensor_gain_offset.yaml" />
+  <rosparam command="load" file="$(find sr_ethercat_hand_config)/controls/sr_edc_calibration_controllers.yaml" />
+
+  <!-- load parameters for the robot library -->
+  <include file="$(find sr_robot_lib)/launch/sr_hand_lib.launch" />
+
+  <!-- publishes joint 0s joint states on separate topic for debug/tuning -->
+  <node pkg="sr_utilities" name="joint_0_pub" type="joint_0_publisher.py"/>
+
+  <!-- Loads the correct robot description depending on the environment variables -->
+  <include file="$(find sr_description)/loaders/load_hand_model_robot_description.launch" />
+
+  <!-- pr2_etherCAT -->
+  <node name="realtime_loop" machine="local" pkg="pr2_etherCAT" type="pr2_etherCAT" args="-i $(env ETHERCAT_PORT) -x robot_description" output="screen"  launch-prefix="pr2_grant"> <!--launch-prefix="gdb -ex run -args" launch-prefix="xterm -hold -e strace -f -e trace=!gettimeofday,futex"/> -->
+    <param if="$(optenv PWM_CONTROL 0)" name="default_control_mode" value="PWM"/>
+    <remap from="joint_states" to="/joint_states" />
+  </node>
+
+  <!--<node name="runtime_monitor" machine="local" pkg="runtime_monitor" type="monitor" />-->
+
+  <group if="$(optenv THREE_FINGER 0)">
+    <node name="calibrate_sr_edc" pkg="pr2_bringup" type="calibrate.py" output="screen"
+	  args="cal_sh_ffj0 cal_sh_ffj3 cal_sh_ffj4 cal_sh_rfj0 cal_sh_rfj3 cal_sh_rfj4 cal_sh_thj1 cal_sh_thj2 cal_sh_thj3 cal_sh_thj4 cal_sh_thj5 cal_sh_wrj1 cal_sh_wrj2"/>
+  </group>
+  <group unless="$(optenv THREE_FINGER 0)">
+    <node name="calibrate_sr_edc" pkg="pr2_bringup" type="calibrate.py" output="screen"
+	  args="cal_sh_ffj0 cal_sh_ffj3 cal_sh_ffj4 cal_sh_mfj0 cal_sh_mfj3 cal_sh_mfj4 cal_sh_rfj0 cal_sh_rfj3 cal_sh_rfj4 cal_sh_lfj0 cal_sh_lfj3 cal_sh_lfj4 cal_sh_lfj5 cal_sh_thj1 cal_sh_thj2 cal_sh_thj3 cal_sh_thj4 cal_sh_thj5 cal_sh_wrj1 cal_sh_wrj2"/>
+  </group>
+
+  <!-- diagnostic aggregator for being able to see the results in the robot_monitor -->
+  <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
+    <rosparam command="load"  file="$(find sr_ethercat_hand_config)/diagnostic_analyzer.yaml"/>
+  </node>
+
+  <!-- Robot state publisher: transforming the joints angles to tf.  -->
+  <node pkg="robot_state_publisher" type="state_publisher"
+	name="srh_robot_state_publisher_pos_etherCAT">
+    <param name="publish_frequency" type="double" value="100.0" />
+    <remap from="joint_states" to="/joint_states" />
+  </node>
+
+</launch>
+

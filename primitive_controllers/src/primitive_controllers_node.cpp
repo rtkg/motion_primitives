@@ -14,7 +14,7 @@
 //----------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "grasp_server");
+  ros::init(argc, argv, "primitive_controllers");
 
 
   double sample_time=0.01;

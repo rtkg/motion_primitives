@@ -1,0 +1,17 @@
+<package>
+  <description brief="test_traj_pub">
+
+     test_traj_pub
+
+  </description>
+  <author>rkg</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/test_traj_pub</url>
+  <rosdep name="boost"/>
+  <depend package="roscpp"/>
+  <depend package="eigen"/>
+  <depend package="sensor_msgs"/>
+</package>
+
+

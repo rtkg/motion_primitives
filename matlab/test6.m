@@ -16,7 +16,7 @@ load ./data/wrj2_sine_5_5.txt;
 load ./data/ffj3_sweep_30_20.txt;
 
 %number of optimizations
-nO=2;
+nO=1;
 
 %training data
 data=[ffj3_sine_5_5; ffj3_step_10_5];
@@ -46,7 +46,7 @@ lb(end)=0; ub(end)=0;
 
 [pI o]=fit2OrderSystem(X,f,lb,ub); %fit 2nd order system only
 pI=[pI; zeros(6,1)];
-
+pI=[0.00001, 35.8419, 1.0127, 2.8664, 0.0006, 2.0714, 2.8375, 8.8603, 0.0]';
 solution.p=[]; solution.o=Inf;
 for i=1:nO
   [p o]=fit2OrderSystemMakkar(X,f,lb,ub,pI); 
@@ -54,7 +54,7 @@ for i=1:nO
       solution.p=p;
       solution.o=o;
   end    
-  pI=randomInitialGuess(lb,ub);
+  % pI=randomInitialGuess(lb,ub);
 end
 
 
