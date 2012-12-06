@@ -1,9 +1,11 @@
 <launch>
    
     <rosparam file="$(find primitive_controllers)/config/dof_config.yaml" command="load"/>
+    
 
     <node pkg="primitive_controllers" name="primitive_controllers" type="primitive_controllers" output="screen" ns="primitive_controllers">
             <param name="sample_time" type="double" value="0.01"/>
+            <rosparam file="$(find primitive_controllers)/config/force_sensors.yaml" command="load"/>
     </node>
 
 </launch>

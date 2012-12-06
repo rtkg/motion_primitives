@@ -17,6 +17,7 @@
 #include <string> 
 #include <motion_primitives_msgs/TriggerMovement.h>
 #include <std_srvs/Empty.h>
+#include <std_msgs/Float64.h>
 
 namespace PrimitiveControllers
 {
@@ -45,16 +46,17 @@ namespace PrimitiveControllers
     CanonicalSystem cs_;
     std::vector<std::string> active_joints_;
     bool output_flag_;
-
+    double max_force_;
     ros::ServiceServer trigger_mvmt_srv_;
     ros::ServiceServer stop_ctrls_srv_;
-
+    void stopControllers();
+    ros::V_Subscriber ctct_force_subs_;
     /////////////////
     //  CALLBACKS  //
     /////////////////
-
-    bool triggerMovement(motion_primitives_msgs::TriggerMovement::Request  &req, motion_primitives_msgs::TriggerMovement::Response &res);
-    bool stopControllers(std_srvs::Empty::Request  &req, std_srvs::Empty::Response &res);
+    void listenContactForceCB(const std_msgs::Float64::ConstPtr& ctct_force);
+    bool triggerMovementCB(motion_primitives_msgs::TriggerMovement::Request  &req, motion_primitives_msgs::TriggerMovement::Response &res);
+    bool stopControllersCB(std_srvs::Empty::Request  &req, std_srvs::Empty::Response &res);
   };
 }//end namespace
 #endif

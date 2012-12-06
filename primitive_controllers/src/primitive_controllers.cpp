@@ -7,13 +7,14 @@
 #include "primitive_controllers/primitive_controllers.h"
 #include <string.h>
 #include <Eigen/Core>
+#include <stdlib.h>
 // #include <sys/time.h>
 // #include <time.h>
 
 namespace PrimitiveControllers
 { 
 
-  PrimitiveControllers::PrimitiveControllers() : nh_private_("~"), Td_(0.01),output_flag_(false)
+  PrimitiveControllers::PrimitiveControllers() : nh_private_("~"), Td_(0.01),output_flag_(false), max_force_(1.0)
   {
     active_joints_.clear();
 
@@ -69,8 +70,21 @@ namespace PrimitiveControllers
 	exit(0);
       }
 
-    trigger_mvmt_srv_ = nh_.advertiseService("trigger_movement",&PrimitiveControllers::triggerMovement,this);
-    stop_ctrls_srv_ = nh_.advertiseService("stop_controllers",&PrimitiveControllers::stopControllers,this);
+    if(nh_private_.searchParam("max_force",searched_param))
+      nh_private_.getParam(searched_param, max_force_);
+
+    XmlRpc::XmlRpcValue sensor_topics;
+    if (nh_private_.searchParam("sensor_topics", searched_param))
+      {
+	nh_.getParam(searched_param,sensor_topics);
+	ROS_ASSERT(sensor_topics.getType() == XmlRpc::XmlRpcValue::TypeArray);
+	for (int32_t j = 0; j <sensor_topics.size();j++) 
+	  ctct_force_subs_.push_back(nh_.subscribe<std_msgs::Float64>(sensor_topics[j], 1, &PrimitiveControllers::listenContactForceCB, this));
+      }
+
+
+    trigger_mvmt_srv_ = nh_.advertiseService("trigger_movement",&PrimitiveControllers::triggerMovementCB,this);
+    stop_ctrls_srv_ = nh_.advertiseService("stop_controllers",&PrimitiveControllers::stopControllersCB,this);
   }
   //-----------------------------------------------------------------------------------------------
   PrimitiveControllers::~PrimitiveControllers()
@@ -84,6 +98,7 @@ namespace PrimitiveControllers
     // struct timeval start, end;
     // double c_time;
     // gettimeofday(&start,0);
+
 
     if (!active_joints_.empty())
       {
@@ -119,18 +134,36 @@ namespace PrimitiveControllers
     ros::spinOnce();
   }
   //-----------------------------------------------------------------------------------------------
-  bool PrimitiveControllers::stopControllers(std_srvs::Empty::Request  &req, std_srvs::Empty::Response &res)
+  void PrimitiveControllers::stopControllers()
   {
-    lock_.lock();
     active_joints_.clear();
     output_flag_=false;
+    ROS_INFO("Primitive controllers stopped.");
+  }
+  //-----------------------------------------------------------------------------------------------
+  void PrimitiveControllers::listenContactForceCB(const std_msgs::Float64::ConstPtr& ctct_force)
+  {
+    lock_.lock();
+
+    if(std::abs(ctct_force->data) > max_force_)
+      {
+	stopControllers();
+	ROS_INFO("Maximal Contact Force exceeded - stopping primitive controllers.");
+      } 
+
+    lock_.unlock();
+  }
+  //-----------------------------------------------------------------------------------------------
+  bool PrimitiveControllers::stopControllersCB(std_srvs::Empty::Request  &req, std_srvs::Empty::Response &res)
+  {
+    lock_.lock();
+    stopControllers();
     lock_.unlock();
 
-    ROS_INFO("Primitive controllers stopped.");
     return true;
   }
   //-----------------------------------------------------------------------------------------------
-  bool PrimitiveControllers::triggerMovement(motion_primitives_msgs::TriggerMovement::Request  &req, motion_primitives_msgs::TriggerMovement::Response &res)
+  bool PrimitiveControllers::triggerMovementCB(motion_primitives_msgs::TriggerMovement::Request  &req, motion_primitives_msgs::TriggerMovement::Response &res)
   {
     res.success=false;
     lock_.lock();
