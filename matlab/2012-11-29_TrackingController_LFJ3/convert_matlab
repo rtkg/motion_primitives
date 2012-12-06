@@ -1,0 +1,8 @@
+#!/bin/bash
+gnome-terminal  
+
+rostopic echo /sh_lfj3_inverse_dynamics_controller/state/set_point  > set_point.txt
+gnome-terminal  
+rostopic echo /sh_lfj3_inverse_dynamics_controller/state/process_value_filtered > process_value_filtered.txt
+
+

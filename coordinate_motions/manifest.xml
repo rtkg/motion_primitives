@@ -1,0 +1,17 @@
+<package>
+  <description brief="coordinate_motions">
+
+     coordinate_motions
+
+  </description>
+  <author>rkg</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/coordinate_motions</url>
+  <depend package="roscpp"/>
+  <depend package="control_msgs"/>
+<depend package="trajectory_msgs"/>
+  <depend package="actionlib"/>
+</package>
+
+

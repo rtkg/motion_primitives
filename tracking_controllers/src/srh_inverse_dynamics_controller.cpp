@@ -269,8 +269,7 @@ namespace controller {
     error_position=command_pos_-filtered_pos_;
     error_velocity=command_vel_-filtered_vel_;
 
-    bool in_deadband = hysteresis_deadband.is_in_deadband(command_pos_, error_position, deadband); //not used
-
+    bool in_deadband = hysteresis_deadband.is_in_deadband(command_pos_, error_position, deadband); 
     if( in_deadband ) //consider the error as 0 if we're in the deadband
       {
 	error_position = 0.0;
@@ -299,14 +298,14 @@ namespace controller {
   //     std::cout<<"x: "<<x.transpose()<<std::endl;
   //     std::cout<<"dx: "<<dx.transpose()<<std::endl;
   //      std::cout<<"effort: "<<commanded_effort<<std::endl;
-  //      exit(0);
-    // }
+  //      //  exit(0);
+  //   }
 
     //Friction compensation, only if we're not in the deadband. (not used)
-    if( !in_deadband )
-      friction_offset = friction_compensator->friction_compensation(filtered_pos_ , filtered_vel_, int(commanded_effort), friction_deadband );
+   //  if( !in_deadband )
+   //    friction_offset = friction_compensator->friction_compensation(filtered_pos_ , filtered_vel_, int(commanded_effort), friction_deadband );
 
-   commanded_effort += friction_offset;
+   // commanded_effort += friction_offset;
 
     //clamp the result to max force
     commanded_effort = std::min( commanded_effort, max_force_demand );

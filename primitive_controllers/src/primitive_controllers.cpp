@@ -81,7 +81,10 @@ namespace PrimitiveControllers
 	for (int32_t j = 0; j <sensor_topics.size();j++) 
 	  ctct_force_subs_.push_back(nh_.subscribe<std_msgs::Float64>(sensor_topics[j], 1, &PrimitiveControllers::listenContactForceCB, this));
       }
-
+    else
+      {
+	ROS_WARN("No contact force sensor topics specified on the parameter server - Watchdog will not be active");
+      }
 
     trigger_mvmt_srv_ = nh_.advertiseService("trigger_movement",&PrimitiveControllers::triggerMovementCB,this);
     stop_ctrls_srv_ = nh_.advertiseService("stop_controllers",&PrimitiveControllers::stopControllersCB,this);
@@ -148,7 +151,7 @@ namespace PrimitiveControllers
     if(std::abs(ctct_force->data) > max_force_)
       {
 	stopControllers();
-	ROS_INFO("Maximal Contact Force exceeded - stopping primitive controllers.");
+	ROS_WARN("Maximal Contact Force exceeded - stopping primitive controllers.");
       } 
 
     lock_.unlock();

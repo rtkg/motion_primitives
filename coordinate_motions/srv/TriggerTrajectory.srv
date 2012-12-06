@@ -1,0 +1,3 @@
+uint8     type #0=START, 1=APPROACH, 2=END
+---
+bool success

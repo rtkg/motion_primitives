@@ -32,6 +32,9 @@ build/*/RelWithDebInfo/*
 build
 test_traj_pub/srv_gen
 test_traj_pub/src/test_traj_pub
+coordinate_motions/srv_gen
+coordinate_motions/src/coordinate_motions
+coordinate_motions/bin
 motion_primitives_msgs/srv_gen
 motion_primitives_msgs/msg_gen
 motion_primitives_msgs/src

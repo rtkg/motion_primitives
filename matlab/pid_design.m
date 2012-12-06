@@ -13,6 +13,8 @@ w0=5;
 
 load('./2012-11-23_SysIdent_LFJ3/p_LFJ3.mat');
 p=p_LFJ3;
+p=[0.001, 61.3451, 0.701, 138.6009, 3.8127, 0.8693, 7.8032, 1.9592, 0.0] ;
+
 
 %POLE PLACEMENT OF THE ERROR DYNAMICS
 eP=[complex(-w0*xi,w0*sqrt(1-xi^2)),complex(-w0*xi,-w0*sqrt(1-xi^2))];
