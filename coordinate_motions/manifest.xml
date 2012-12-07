@@ -9,6 +9,9 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/coordinate_motions</url>
   <depend package="roscpp"/>
+<depend package="eigen"/>
+<depend package="sensor_msgs"/>
+<depend package="motion_primitives_msgs"/>
   <depend package="control_msgs"/>
 <depend package="trajectory_msgs"/>
   <depend package="actionlib"/>

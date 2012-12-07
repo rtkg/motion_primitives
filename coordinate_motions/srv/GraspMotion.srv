@@ -1,0 +1,5 @@
+string    grasp_name
+uint8     type_id
+float32   scale
+---
+bool success

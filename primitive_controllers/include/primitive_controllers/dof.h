@@ -11,6 +11,7 @@
 #include "ros/ros.h"
 #include <boost/thread/mutex.hpp>
 #include "motion_primitives_msgs/JointControllerState.h"
+#include "sr_robot_msgs/JointControllerState.h"
 #include <map>
 #include <string>
 #include <Eigen/Core>
@@ -22,6 +23,10 @@
 
 namespace PrimitiveControllers
 {
+
+#define OPEN_LOOP 1
+#define MPV_CONTROL 1
+
   // const double PI = std::acos(-1.0);
 
   /**
@@ -84,10 +89,8 @@ namespace PrimitiveControllers
 
     ros::NodeHandle nh_;
     ros::Publisher  state_pub_;
-
-#ifndef OPEN_LOOP
     ros::Subscriber state_sub_;
-#endif
+
 
 #ifdef DEBUG
     ros::Publisher ref_state_pub_;
@@ -107,10 +110,9 @@ namespace PrimitiveControllers
     //  CALLBACKS  //
     /////////////////
 
-#ifndef OPEN_LOOP
-    void stateCallback(const motion_primitives_msgs::JointControllerState::ConstPtr& msg);
-#endif
-    
+ void stateCallback(const sr_robot_msgs::JointControllerState::ConstPtr& msg);
+ void stateCallback(const motion_primitives_msgs::JointControllerState::ConstPtr& msg);
+ 
   };
 }//end namespace
 #endif

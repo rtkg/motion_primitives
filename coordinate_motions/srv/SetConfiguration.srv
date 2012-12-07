@@ -2,7 +2,5 @@ string[]  joint_names
 float32[] positions
 uint8     type #0=START, 1=APPROACH, 2=END
 float32   duration
-#float32   goal_tolerance
-float32   goal_time_tolerance
 ---
 bool success

@@ -1,6 +1,6 @@
 <launch>
    
-    <rosparam file="$(find primitive_controllers)/config/dof_config.yaml" command="load"/>
+    <rosparam file="$(find primitive_controllers)/config/dof_config_mpv.yaml" command="load"/>
     
 
     <node pkg="primitive_controllers" name="primitive_controllers" type="primitive_controllers" output="screen" ns="primitive_controllers">

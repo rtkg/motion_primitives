@@ -16,12 +16,6 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 #set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-SET(open_loop_mode $ENV{OPEN_LOOP})
-IF(DEFINED open_loop_mode)
-  SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D OPEN_LOOP")
-  MESSAGE("Building open loop controllers")
-ENDIF(DEFINED open_loop_mode)
-
 SET(debug_mode $ENV{DEBUG})
 IF(DEFINED debug_mode)
   SET( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D DEBUG")

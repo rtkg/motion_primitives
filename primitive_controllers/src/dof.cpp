@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sstream>
 #include "sensor_msgs/JointState.h"
+#include "std_msgs/Float64.h"
 #include <math.h>
 namespace PrimitiveControllers
 {
@@ -69,10 +70,20 @@ namespace PrimitiveControllers
     for (int i=0; i<dof_config["dmp"].size(); i++)
       param_map_[(int)dof_config["dmp"][i]["id"]]=new DMPParameters(dof_config["dmp"][i]);
 
-    state_pub_ = nh_.advertise<sensor_msgs::JointState>(command_topic_,1);
+#ifdef MPV_CONTROL
+    state_pub_ = nh_.advertise<std_msgs::Float64>(command_topic_,1);
+#else
+    state_pub_ = nh_.advertise<sensor_msgs::JointState>(command_topic_,1);  
+#endif
 
 #ifndef OPEN_LOOP
+#ifdef MPV_CONTROL
+    //std::cout<<"subscribing to shadow_msgs"<<std::endl;
+    state_sub_= nh_.subscribe<sr_robot_msgs::JointControllerState>(state_topic_, 1, &DoF::stateCallback,this);
+#else
+    // std::cout<<"subscribing to motion_primitives_msgs"<<std::endl;
     state_sub_= nh_.subscribe<motion_primitives_msgs::JointControllerState>(state_topic_, 1, &DoF::stateCallback,this);
+#endif
 #endif
 
 #ifdef DEBUG
@@ -176,12 +187,18 @@ namespace PrimitiveControllers
     //    }
 
     //PUBLISH (change q back)
+#ifdef MPV_CONTROL
+    std_msgs::Float64 msg;
+    msg.data=x_(0)+goal_;
+#else
     sensor_msgs::JointState msg;
     msg.header.stamp=ros::Time::now();
     msg.name.push_back(joint_);
     msg.position.push_back(x_(0)+goal_);
     msg.velocity.push_back(x_(1));
     msg.effort.push_back(ddq); //abuse the effort field i.o.t. publish the acceleration
+#endif
+
     state_pub_.publish(msg);
 
     x_ref_=x_ref;
@@ -300,7 +317,6 @@ namespace PrimitiveControllers
     return goal;
   }
   //-------------------------------------------------------------------------------------------------
-#ifndef OPEN_LOOP
   void DoF::stateCallback(const motion_primitives_msgs::JointControllerState::ConstPtr& msg)
   {
 
@@ -315,6 +331,20 @@ namespace PrimitiveControllers
 
     lock_.unlock();
   }
-#endif
+ //-------------------------------------------------------------------------------------------------
+  void DoF::stateCallback(const sr_robot_msgs::JointControllerState::ConstPtr& msg)
+  {
+
+    lock_.lock();
+    //set the current state to the measured state in case the tracking error is too large
+    if (std::abs(x_(0) - msg->process_value+goal_) > track_tol_)
+      {
+	ROS_DEBUG("Tracking tolerance exceeded in joint %s.",joint_.c_str());
+	x_(0)=msg->process_value-goal_;
+	x_(1)=msg->process_value_dot;
+      }
+
+    lock_.unlock();
+  }
   //-------------------------------------------------------------------------------------------------
 }//end namespace
