@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rosservice call /primitive_controllers/trigger_movement '{movement: {id: 901, tau: 5, target_posture: {name: ['FFJ0',FFJ3','FFJ4','LFJ0','LFJ3','LFJ4','LFJ5','MFJ0','MFJ3','MFJ4','RFJ0','RFJ3','RFJ4','THJ1','THJ2','THJ3','THJ4','THJ5], position: [2.34136, 1.10623, 0.0484234, 2.5288, 0.964308, -0.105544, 0.0450578, 2.44454, 1.24477, 0.0170572, 2.44539, 1.17907, 0.0620636, 0.508282, 0.470235, 0.0192726, 0.563021, 0.10575]}}}'
+    
+

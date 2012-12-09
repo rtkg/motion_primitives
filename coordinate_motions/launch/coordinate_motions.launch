@@ -2,6 +2,7 @@
 
     <node pkg="coordinate_motions" name="coordinate_motions" type="coordinate_motions" output="screen" ns="coordinate_motions">
        <remap from="joint_states" to="/positions/joint_states"/> 
+       <remap from="trigger_grasp" to="/primitive_controllers/trigger_movement"/> 
        <param name="data_dir" type="string" value="$(find demonstration_logger)/data/" />
     </node>
 

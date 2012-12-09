@@ -1,4 +1,4 @@
 #!/bin/bash
 
-rosservice call /primitive_controllers/trigger_movement '{movement: {id: 14, tau: 1, target_posture: {name: ['FFJ0',FFJ3','FFJ4','LFJ0','LFJ3','LFJ4','LFJ5','MFJ0','MFJ3','MFJ4','RFJ0','RFJ3','RFJ4','THJ1','THJ2','THJ3','THJ4','THJ5], position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ]}}}'
+rosservice call /primitive_controllers/trigger_movement '{movement: {id: 900, tau: 5, target_posture: {name: ['FFJ0',FFJ3','FFJ4','LFJ0','LFJ3','LFJ4','LFJ5','MFJ0','MFJ3','MFJ4','RFJ0','RFJ3','RFJ4','THJ1','THJ2','THJ3','THJ4','THJ5], position: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]}}}'
     

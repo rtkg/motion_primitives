@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rosservice call /coordinate_motions/set_configuration '{joint_names: ["ShoulderJRotate", "ShoulderJSwing", "ElbowJSwing", "ElbowJRotate", "WRJ1", "WRJ2"], positions: [0.0, 0.0, 1.57, -0.78, 0.0, 0.0], type: 1, duration: 5}' 
+

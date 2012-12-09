@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find primitive_controllers)/launch/primitive_controllers.launch"/>
+  <include file="$(find coordinate_motions)/launch/coordinate_motions.launch"/>
+
+</launch>

@@ -63,6 +63,7 @@ namespace CoordinateMotions
     trigger_traj_srv_ = nh_.advertiseService("trigger_trajectory",&CoordinateMotions::triggerTrajectoryCB,this);
     grasp_motion_srv_ = nh_.advertiseService("grasp_motion",&CoordinateMotions::graspMotionCB,this);
     trigger_grasp_clt_ = nh_.serviceClient<motion_primitives_msgs::TriggerMovement>("trigger_grasp");
+    trigger_grasp_clt_.waitForExistence();
   }
   //-----------------------------------------------------------------------------------------------
   CoordinateMotions::~CoordinateMotions()
@@ -172,8 +173,8 @@ namespace CoordinateMotions
 
     control_msgs::FollowJointTrajectoryGoal goal;
 
-    //minimumJerkTraj(goal.trajectory,conf,TRAJ_RES);
- singlePointTraj(goal.trajectory,conf);
+   minimumJerkTraj(goal.trajectory,conf,TRAJ_RES);
+   //singlePointTraj(goal.trajectory,conf);
  
     goal.goal_time_tolerance=ros::Duration(GOAL_TIME_TOLERANCE);
     //JointTolerance[] goal_tolerance

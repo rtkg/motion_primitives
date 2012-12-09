@@ -24,8 +24,8 @@
 namespace PrimitiveControllers
 {
 
-#define OPEN_LOOP 1
-#define MPV_CONTROL 1
+#define OPEN_LOOP 1 //build open loop control
+#define MPV_CONTROL 1 //build for mixed_position_velocity controllers
 
   // const double PI = std::acos(-1.0);
 
@@ -34,6 +34,8 @@ namespace PrimitiveControllers
    */
   struct DMPParameters
   {
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
     DMPParameters();
     DMPParameters(XmlRpc::XmlRpcValue dmp_param);
 
@@ -54,11 +56,14 @@ namespace PrimitiveControllers
   {
   public:
 
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
     DoF(XmlRpc::XmlRpcValue dof_config);
     ~DoF();
 
     void reset(int id,double goal, double Tau, double Td);
     void update(double s);
+    void subscribeStateCallback();
     Eigen::Vector2d getState();
     double getGoal();
 

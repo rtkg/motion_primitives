@@ -18,6 +18,7 @@ namespace PrimitiveControllers
   //-------------------------------------------------------------------------------------------------
   DMPParameters::DMPParameters(XmlRpc::XmlRpcValue dmp_param)
   {
+
     id_=(int)dmp_param["id"];
     name_=(std::string)dmp_param["name"];
     nD_=(int)dmp_param["nD"];
@@ -99,7 +100,7 @@ namespace PrimitiveControllers
   //-----------------------------------------------------------------------------------------------
   void DoF::reset(int id,double goal, double Tau, double Td)
   {
-
+    //state_sub_.shutdown();
     // file_x_.open(("/home/rkg/Desktop/DMP/matlab/mpc_dmp/x_.txt"), std::ios::out | std::ios::trunc );
     // file_x_ref_.open(("/home/rkg/Desktop/DMP/matlab/mpc_dmp/x_ref_.txt"), std::ios::out | std::ios::trunc );
     // file_s_.open(("/home/rkg/Desktop/DMP/matlab/mpc_dmp/s_.txt"), std::ios::out | std::ios::trunc );
@@ -321,6 +322,7 @@ namespace PrimitiveControllers
   {
 
     lock_.lock();
+  
     //set the current state to the measured state in case the tracking error is too large
     if (std::abs(x_(0) - msg->process_value_filtered+goal_) > track_tol_)
       {
@@ -346,5 +348,10 @@ namespace PrimitiveControllers
 
     lock_.unlock();
   }
+  //-------------------------------------------------------------------------------------------------
+  void DoF::subscribeStateCallback()
+  {
+
+}
   //-------------------------------------------------------------------------------------------------
 }//end namespace
