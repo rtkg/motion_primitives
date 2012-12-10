@@ -27,7 +27,7 @@ namespace controller
     ~SrhInverseDynamicsController();
 
     bool init( pr2_mechanism_model::RobotState *robot, const std::string &joint_name,
-               boost::shared_ptr<control_toolbox::Pid> pid,
+               boost::shared_ptr<control_toolbox::Pid> pid,boost::shared_ptr<control_toolbox::Pid> pid_vel,
                boost::shared_ptr<SSModel> model);
     bool init(pr2_mechanism_model::RobotState *robot, ros::NodeHandle &n);
 
@@ -43,7 +43,7 @@ namespace controller
 
   private:
     boost::shared_ptr<control_toolbox::Pid> pid_;
-
+    boost::shared_ptr<control_toolbox::Pid> pid_vel_; //hack an additional pid just to get the integral for velocity
     //publish our joint controller state
     boost::shared_ptr<realtime_tools::RealtimePublisher<motion_primitives_msgs::JointControllerState> > controller_state_publisher_;
 

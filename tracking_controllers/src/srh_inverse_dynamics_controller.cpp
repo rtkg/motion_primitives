@@ -33,7 +33,7 @@ namespace controller {
   }
   //----------------------------------------------------------------------------------
   bool SrhInverseDynamicsController::init(pr2_mechanism_model::RobotState *robot, const std::string &joint_name,
-					  boost::shared_ptr<control_toolbox::Pid> pid,
+					  boost::shared_ptr<control_toolbox::Pid> pid,boost::shared_ptr<control_toolbox::Pid> pid_vel,
 					  boost::shared_ptr<SSModel> model)
   {
     ROS_DEBUG(" --------- ");
@@ -95,6 +95,7 @@ namespace controller {
     get_min_max( robot_->model_->robot_model_, joint_name );
 
     pid_=pid;
+    pid_vel_=pid_vel;
     model_=model;
 
     serve_set_gains_ = node_.advertiseService("set_gains", &SrhInverseDynamicsController::setGains, this);
@@ -171,13 +172,22 @@ namespace controller {
       return false;
 
     boost::shared_ptr<control_toolbox::Pid> pid = boost::shared_ptr<control_toolbox::Pid>( new control_toolbox::Pid() );
+    boost::shared_ptr<control_toolbox::Pid> pid_vel = boost::shared_ptr<control_toolbox::Pid>( new control_toolbox::Pid() );
     if (!pid->init(ros::NodeHandle(node_, "pid")))
       return false;
 
+    //hack to remove the i term from the pid and put it in pid_vel
+    double p,i,d,i_max,i_min;
+    pid->getGains (p, i, d, i_max,i_min);
+    pid->setGains (p, 0.0, d, i_max,i_min);
+    pid_vel->setGains (0.0, i, 0.0, i_max,i_min);
+    
+
+ 
 
     controller_state_publisher_.reset( new realtime_tools::RealtimePublisher<motion_primitives_msgs::JointControllerState>(node_, "state", 1));
 
-    return init(robot, joint_name, pid,ss_model);
+    return init(robot, joint_name, pid,pid_vel,ss_model);
   }
 
   //----------------------------------------------------------------------------------
@@ -200,6 +210,7 @@ namespace controller {
   
 
     pid_->reset();
+    pid_vel_->reset();
     read_parameters();
     ROS_WARN("Reseting PID");
     last_time_ = robot_->getTime();
@@ -209,7 +220,9 @@ namespace controller {
   {
     ROS_INFO_STREAM("New parameters: " << "PID: [" <<req.p << ", " <<req.i << ", " <<req.d << ", " <<req.i_clamp << "] ");
 
-    pid_->setGains(req.p,req.i,req.d,req.i_clamp,-req.i_clamp);
+    pid_->setGains(req.p,0.0,req.d,req.i_clamp,-req.i_clamp);
+    pid_vel_->setGains(0.0,req.i,0.0,req.i_clamp,-req.i_clamp);
+
     max_force_demand = req.max_force;
     friction_deadband = req.friction_deadband;
     deadband = req.deadband;
@@ -219,7 +232,11 @@ namespace controller {
   //----------------------------------------------------------------------------------
   void SrhInverseDynamicsController::getGains(double &p, double &i, double &d, double &i_max, double &i_min)
   {
-    pid_->getGains(p,i,d,i_max,i_min);
+    double dummy_p, dummy_i, dummy_d, dummy_i_max, dummy_i_min;
+    pid_->getGains(p,dummy_i,d,dummy_i_max,dummy_i_min);
+    pid_vel_->getGains(dummy_p,i,dummy_d,i_max,i_min);
+
+
   }
   //----------------------------------------------------------------------------------
   void SrhInverseDynamicsController::update()
@@ -277,7 +294,12 @@ namespace controller {
       }
 
     //OUTER PID LOOP -> generates a reference acceleration
-    commanded_acceleration = command_acc_+pid_->updatePid(error_position,error_velocity, dt_);
+
+    double pid_p_output=pid_->updatePid(error_position,error_velocity, dt_);
+    double pid_v_output=pid_vel_->updatePid(error_position,error_velocity, dt_);
+    commanded_acceleration = command_acc_+pid_p_output+pid_v_output;
+
+    ROS_DEBUG("Commanded acc: %f, set_acc: %f, pid_p_output: %f, pid_v_output: %f", commanded_acceleration,command_acc_, pid_p_output,pid_v_output);
 
     //INNER INVERSE DYNAMCIS LOOP
     Eigen::VectorXd x(2,1),dx(2,1);
