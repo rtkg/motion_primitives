@@ -18,3 +18,13 @@ float64 velocity_p
 float64 velocity_i
 float64 velocity_d
 float64 velocity_i_clamp
+float64 q_ref
+float64 dq_ref
+float64 ddq_ref
+float64 aq
+float64 effort_model
+float64 pid_p_output
+float64 pid_v_output
+
+
+
