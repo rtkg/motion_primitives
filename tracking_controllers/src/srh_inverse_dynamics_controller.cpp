@@ -296,9 +296,11 @@ namespace controller {
     //OUTER PID LOOP -> generates a reference acceleration
 
     double pid_p_output=pid_->updatePid(error_position,error_velocity, dt_);
-    double pid_v_output=pid_vel_->updatePid(error_position,error_velocity, dt_);
+    double pid_v_output=pid_vel_->updatePid(error_velocity,0.0, dt_);
     commanded_acceleration = command_acc_+pid_p_output+pid_v_output;
 
+
+    //std::cout<<"commanded acc: "<<commanded_acceleration<<" command_acc_: "<<command_acc_<<" pid_p_output: "<<pid_p_output<<" pid_v_output: "<<pid_v_output<<std::endl;
     ROS_DEBUG("Commanded acc: %f, set_acc: %f, pid_p_output: %f, pid_v_output: %f", commanded_acceleration,command_acc_, pid_p_output,pid_v_output);
 
     //INNER INVERSE DYNAMCIS LOOP
@@ -306,11 +308,14 @@ namespace controller {
     x << filtered_pos_, filtered_vel_;
     dx << filtered_vel_, commanded_acceleration;
 
+    std::cout<<"x: "<<x.transpose()<<" dx: "<<dx.transpose()<<std::endl; 
+
     model_->setState(x);
     model_->setStateDerivative(dx);
     model_->computeControl();
     commanded_effort=model_->getControl();
 
+std::cout<<"comm effort: "<<commanded_effort<<std::endl;
   //   if (joint_state_->joint_->name=="LFJ3"){
   //     std::cout<<"command_pos_: "<<command_pos_<<std::endl;
   //    std::cout<<"command_vel_: "<<command_vel_<<std::endl;
