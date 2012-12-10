@@ -301,21 +301,21 @@ namespace controller {
 
 
     //std::cout<<"commanded acc: "<<commanded_acceleration<<" command_acc_: "<<command_acc_<<" pid_p_output: "<<pid_p_output<<" pid_v_output: "<<pid_v_output<<std::endl;
-    ROS_DEBUG("Commanded acc: %f, set_acc: %f, pid_p_output: %f, pid_v_output: %f", commanded_acceleration,command_acc_, pid_p_output,pid_v_output);
+    //ROS_DEBUG("Commanded acc: %f, set_acc: %f, pid_p_output: %f, pid_v_output: %f", commanded_acceleration,command_acc_, pid_p_output,pid_v_output);
 
     //INNER INVERSE DYNAMCIS LOOP
     Eigen::VectorXd x(2,1),dx(2,1);
     x << filtered_pos_, filtered_vel_;
     dx << filtered_vel_, commanded_acceleration;
 
-    std::cout<<"x: "<<x.transpose()<<" dx: "<<dx.transpose()<<std::endl; 
+
 
     model_->setState(x);
     model_->setStateDerivative(dx);
     model_->computeControl();
     commanded_effort=model_->getControl();
+    double effort_model=commanded_effort; //just for publishing
 
-std::cout<<"comm effort: "<<commanded_effort<<std::endl;
   //   if (joint_state_->joint_->name=="LFJ3"){
   //     std::cout<<"command_pos_: "<<command_pos_<<std::endl;
   //    std::cout<<"command_vel_: "<<command_vel_<<std::endl;
@@ -375,6 +375,16 @@ std::cout<<"comm effort: "<<commanded_effort<<std::endl;
 	    controller_state_publisher_->msg_.measured_effort = joint_state_->measured_effort_;
 
 	    controller_state_publisher_->msg_.friction_compensation = friction_offset;
+
+	    //just for debugging!
+	    controller_state_publisher_->msg_.effort_model=effort_model;
+	    controller_state_publisher_->msg_.q_ref=filtered_pos_;
+	    controller_state_publisher_->msg_.dq_ref=filtered_vel_;
+	    controller_state_publisher_->msg_.ddq_ref=command_acc_;
+	    controller_state_publisher_->msg_.aq=commanded_acceleration;
+	    controller_state_publisher_->msg_.pid_p_output=pid_p_output;
+	    controller_state_publisher_->msg_.pid_v_output=pid_v_output;
+    
 
 	    double dummy;
 	    getGains(controller_state_publisher_->msg_.position_p,
