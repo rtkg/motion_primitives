@@ -77,15 +77,7 @@ namespace PrimitiveControllers
     state_pub_ = nh_.advertise<sensor_msgs::JointState>(command_topic_,1);  
 #endif
 
-#ifndef OPEN_LOOP
-#ifdef MPV_CONTROL
-    //std::cout<<"subscribing to shadow_msgs"<<std::endl;
-    state_sub_= nh_.subscribe<sr_robot_msgs::JointControllerState>(state_topic_, 1, &DoF::stateCallback,this);
-#else
-    // std::cout<<"subscribing to motion_primitives_msgs"<<std::endl;
-    state_sub_= nh_.subscribe<motion_primitives_msgs::JointControllerState>(state_topic_, 1, &DoF::stateCallback,this);
-#endif
-#endif
+
 
 #ifdef DEBUG
     ref_state_pub_ = nh_.advertise<sensor_msgs::JointState>(joint_+"/ref",1);
@@ -100,7 +92,7 @@ namespace PrimitiveControllers
   //-----------------------------------------------------------------------------------------------
   void DoF::reset(int id,double goal, double Tau, double Td)
   {
-    //state_sub_.shutdown();
+    state_sub_.shutdown();
     // file_x_.open(("/home/rkg/Desktop/DMP/matlab/mpc_dmp/x_.txt"), std::ios::out | std::ios::trunc );
     // file_x_ref_.open(("/home/rkg/Desktop/DMP/matlab/mpc_dmp/x_ref_.txt"), std::ios::out | std::ios::trunc );
     // file_s_.open(("/home/rkg/Desktop/DMP/matlab/mpc_dmp/s_.txt"), std::ios::out | std::ios::trunc );
@@ -351,7 +343,15 @@ namespace PrimitiveControllers
   //-------------------------------------------------------------------------------------------------
   void DoF::subscribeStateCallback()
   {
-
+    //#ifndef OPEN_LOOP
+#ifdef MPV_CONTROL
+    //std::cout<<"subscribing to shadow_msgs"<<std::endl;
+    state_sub_= nh_.subscribe<sr_robot_msgs::JointControllerState>(state_topic_, 1, &DoF::stateCallback,this);
+#else
+    // std::cout<<"subscribing to motion_primitives_msgs"<<std::endl;
+    state_sub_= nh_.subscribe<motion_primitives_msgs::JointControllerState>(state_topic_, 1, &DoF::stateCallback,this);
+#endif
+    //#endif
 }
   //-------------------------------------------------------------------------------------------------
 }//end namespace

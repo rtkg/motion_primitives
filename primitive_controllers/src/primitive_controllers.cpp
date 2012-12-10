@@ -79,7 +79,7 @@ namespace PrimitiveControllers
 	nh_.getParam(searched_param,sensor_topics);
 	ROS_ASSERT(sensor_topics.getType() == XmlRpc::XmlRpcValue::TypeArray);
 	for (int32_t j = 0; j <sensor_topics.size();j++) 
-	  ctct_force_subs_.push_back(nh_.subscribe<std_msgs::Float64>(sensor_topics[j], 1, &PrimitiveControllers::listenContactForceCB, this));
+	  ctct_force_subs_.push_back(nh_.subscribe<kcl_msgs::KCL_ContactStateStamped>(sensor_topics[j], 1, &PrimitiveControllers::listenContactForceCB, this));
       }
     else
       {
@@ -144,11 +144,11 @@ namespace PrimitiveControllers
     ROS_INFO("Primitive controllers stopped.");
   }
   //-----------------------------------------------------------------------------------------------
-  void PrimitiveControllers::listenContactForceCB(const std_msgs::Float64::ConstPtr& ctct_force)
+    void PrimitiveControllers::listenContactForceCB(const kcl_msgs::KCL_ContactStateStamped::ConstPtr& ctct_force)
   {
     lock_.lock();
 
-    if(std::abs(ctct_force->data) > max_force_)
+    if(std::abs(ctct_force->Fnormal) > max_force_)
       {
 	stopControllers();
 	ROS_WARN("Maximal Contact Force exceeded - stopping primitive controllers.");
@@ -181,6 +181,9 @@ namespace PrimitiveControllers
 	}
    
     cs_.reset();
+#ifndef OPEN_LOOP
+    cs_.subscribeStateCallback();
+#endif
     cs_.setTau(req.movement.tau);
 
     active_joints_=req.movement.target_posture.name;

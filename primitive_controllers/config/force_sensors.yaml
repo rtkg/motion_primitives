@@ -1,8 +1,8 @@
 max_force: 2
-sensor_topics:  [/sr_tactile/touch/ff,
-                 /sr_tactile/touch/lf,
-                 /sr_tactile/touch/mf,
-                 /sr_tactile/touch/rf,
-                 /sr_tactile/touch/th]
+sensor_topics:  [/ffdistal/ContactState,
+                 /mfdistal/ContactState,
+                 /rfdistal/ContactState,
+                 /lfdistal/ContactState,
+                 /thdistal/ContactState]
 
 

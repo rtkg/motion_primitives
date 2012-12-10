@@ -17,7 +17,8 @@
 #include <string> 
 #include <motion_primitives_msgs/TriggerMovement.h>
 #include <std_srvs/Empty.h>
-#include <std_msgs/Float64.h>
+//#include <std_msgs/Float64.h>
+#include <kcl_msgs/KCL_ContactStateStamped.h>
 
 namespace PrimitiveControllers
 {
@@ -54,7 +55,7 @@ namespace PrimitiveControllers
     /////////////////
     //  CALLBACKS  //
     /////////////////
-    void listenContactForceCB(const std_msgs::Float64::ConstPtr& ctct_force);
+    void listenContactForceCB(const kcl_msgs::KCL_ContactStateStamped::ConstPtr& ctct_force);
     bool triggerMovementCB(motion_primitives_msgs::TriggerMovement::Request  &req, motion_primitives_msgs::TriggerMovement::Response &res);
     bool stopControllersCB(std_srvs::Empty::Request  &req, std_srvs::Empty::Response &res);
   };

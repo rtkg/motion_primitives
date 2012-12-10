@@ -16,6 +16,7 @@
   <depend package="std_srvs"/>
   <depend package="std_msgs"/>
   <depend package="sensor_msgs"/>
+<depend package="kcl_msgs"/>
   <depend package="sr_robot_msgs"/>
 </package>
 
