@@ -8,23 +8,24 @@ M=1;
 U_m= Inf; %maximum control input
 noise=1000;
 x0=[.1;0;0];
-xi=0.9;
-w0=5;
+xi=0.999999999;
+w0=80;
 
-load('./2012-11-23_SysIdent_LFJ3/p_LFJ3.mat');
-p=p_LFJ3;
+%load('./2012-11-29_TrackingController_LFJ3/LFJ3_sine_0.8_5_p_-3200_i_-200_d_-800_iclamp_32.0_2012-11-29-18-57-39.txt');
+%p=p_LFJ3;LFJ3_sine_0_8_5_p__3200_i__200_d__800_iclamp_32_0_2012_11_29_18
 p=[0.001, 61.3451, 0.701, 138.6009, 3.8127, 0.8693, 7.8032, 1.9592, 0.0] ;
 
 
 %POLE PLACEMENT OF THE ERROR DYNAMICS
 eP=[complex(-w0*xi,w0*sqrt(1-xi^2)),complex(-w0*xi,-w0*sqrt(1-xi^2))];
+
 A_e=[0 1; -1 -1];
 B_e=[0;1];
 K_e=place(A_e,B_e,eP);
 A_e=A_e-B_e*K_e;
 %PID gains
-Kp=-A_e(2,1);
-Kd=-A_e(2,2); 
+Kp=-A_e(2,1)
+Kd=-A_e(2,2) 
 Ki=1; 
 
 %REFERENCE TRAJECTORY

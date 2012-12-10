@@ -40,6 +40,7 @@ namespace controller
   class SystemIdentification
   {
   public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     SystemIdentification();
    ~SystemIdentification();
