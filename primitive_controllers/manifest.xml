@@ -11,13 +11,13 @@
   <rosdep name="boost"/>
   <depend package="roscpp"/>
   <depend package="motion_primitives_msgs"/>
-  <depend package="eigen"/>
   <depend package="acado"/>
   <depend package="std_srvs"/>
   <depend package="std_msgs"/>
   <depend package="sensor_msgs"/>
-<depend package="kcl_msgs"/>
+  <depend package="kcl_msgs"/>
   <depend package="sr_robot_msgs"/>
+  <rosdep name="eigen"/>
 </package>
 
 
